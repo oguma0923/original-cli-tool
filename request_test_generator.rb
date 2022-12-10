@@ -1,8 +1,8 @@
-require 'active_support/inflector'
-require 'erb'
-
 class RequestTestGenerator
-  def initialize(controller_name, excluded_actions: [])
+  require 'active_support/inflector'
+  require 'erb'
+
+  def initialize(controller_name, excluded_actions)
     @controller_name = controller_name.underscore.singularize
     @actions = %w[index show new edit create update destroy] - excluded_actions
   end
