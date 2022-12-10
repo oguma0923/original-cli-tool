@@ -6,7 +6,6 @@ RSpec.describe '<%= @controller_name.camelize.pluralize %>', type: :request do
   let(:edited_<%= @controller_name %>) { FactoryBot.attributes_for(:<%= @controller_name %>, :edit) }
   let(:invalid_<%= @controller_name %>) { FactoryBot.attributes_for(:<%= @controller_name %>, :invalid) }
 
-
 <% if @actions.include?('index') %>
   describe 'GET /<%= @controller_name.pluralize %>' do
     it 'レスポンスが正常であること' do
@@ -14,8 +13,8 @@ RSpec.describe '<%= @controller_name.camelize.pluralize %>', type: :request do
       expect(response).to have_http_status :ok
     end
   end
-<% end %>
 
+<% end %>
 <% if @actions.include?('show') %>
   describe 'GET /<%= @controller_name.pluralize %>/:id' do
     it 'レスポンスが正常であること' do
@@ -23,8 +22,8 @@ RSpec.describe '<%= @controller_name.camelize.pluralize %>', type: :request do
       expect(response).to have_http_status :ok
     end
   end
-<% end %>
 
+<% end %>
 <% if @actions.include?('new') %>
   describe 'GET /<%= @controller_name.pluralize %>/new' do
     it 'レスポンスが正常であること' do
@@ -32,8 +31,8 @@ RSpec.describe '<%= @controller_name.camelize.pluralize %>', type: :request do
       expect(response).to have_http_status :ok
     end
   end
-<% end %>
 
+<% end %>
 <% if @actions.include?('edit') %>
   describe 'GET /<%= @controller_name.pluralize %>/:id/edit' do
     it 'レスポンスが正常であること' do
@@ -41,8 +40,8 @@ RSpec.describe '<%= @controller_name.camelize.pluralize %>', type: :request do
       expect(response).to have_http_status :ok
     end
   end
-<% end %>
 
+<% end %>
 <% if @actions.include?('create') %>
   describe 'POST /<%= @controller_name.pluralize %>' do
     context 'パラメータが有効なとき' do
@@ -60,8 +59,8 @@ RSpec.describe '<%= @controller_name.camelize.pluralize %>', type: :request do
       end
     end
   end
-<% end %>
 
+<% end %>
 <% if @actions.include?('update') %>
   describe 'PATCH/PUT /<%= @controller_name.pluralize %>/:id' do
     context 'パラメータが有効なとき' do
@@ -84,8 +83,8 @@ RSpec.describe '<%= @controller_name.camelize.pluralize %>', type: :request do
       end
     end
   end
-<% end %>
 
+<% end %>
 <% if @actions.include?('destroy') %>
   describe 'DELETE /<%= @controller_name.pluralize %>/:id' do
     it 'indexページにリダイレクトされること' do
