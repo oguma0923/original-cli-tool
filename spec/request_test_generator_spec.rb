@@ -23,6 +23,12 @@ RSpec.describe RequestTestGenerator do
       it 'アクションを指定しなければすべてのアクションに関するテストが生成されること' do
         RequestTestGenerator.new(controller_name, []).generate
         expect(File.read(generated_file)).to include("describe 'GET /tests' do")
+        expect(File.read(generated_file)).to include("describe 'GET /tests/:id' do")
+        expect(File.read(generated_file)).to include("describe 'GET /tests/new' do")
+        expect(File.read(generated_file)).to include("describe 'GET /tests/:id/edit' do")
+        expect(File.read(generated_file)).to include("describe 'POST /tests' do")
+        expect(File.read(generated_file)).to include("describe 'PATCH/PUT /tests/:id' do")
+        expect(File.read(generated_file)).to include("describe 'DELETE /tests/:id' do")
       end
     end
   end
