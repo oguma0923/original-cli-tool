@@ -9,12 +9,19 @@ class RailsTestGenerator
 
     OptionParser.new do |options|
       options.on(
-        '-r',
-        '--request controller_name',
-        '指定したコントローラ名のリクエストテストを生成 例：-r test'
-      ) do |controller_name|
-        @controller_name = controller_name
+        '-n',
+        '--name name',
+        String,
+        '*** 必須 *** テスト対象のモデル名（コントローラ名）を指定 例: -n test'
+      ) do |name|
+        @name = name
       end
+
+      options.on(
+        '-r',
+        '--request',
+        'リクエストテストを生成 例：-r'
+      ) { @request = true }
 
       options.on(
         '-e',
@@ -27,11 +34,9 @@ class RailsTestGenerator
 
       options.on(
         '-m',
-        '--model model_name',
-        '指定した名前のモデルテストを生成 例：-m test'
-      ) do |model_name|
-        @model_name = model_name
-      end
+        '--model',
+        'モデルテストを生成 例：-m'
+      ) { @model = true }
 
       options.on(
         '-c',
@@ -47,9 +52,11 @@ class RailsTestGenerator
   end
 
   def generate
-    RequestTestGenerator.new(@controller_name, @excluded_actions).generate if @controller_name
-    ModelTestGenerator.new(@model_name).generate if @model_name
-    FactoryBotGenerator.new(@columns).generate if @columns
+    raise ArgumentError, '--nameによるモデル名（コントローラ名）の指定がありません。' if @name.nil?
+
+    RequestTestGenerator.new(@name, @excluded_actions).generate if @request
+    ModelTestGenerator.new(@name).generate if @model
+    FactoryBotGenerator.new(@name, @columns).generate if @columns
   end
 end
 
