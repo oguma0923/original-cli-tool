@@ -2,7 +2,7 @@ class RailsTestGenerator
   require 'optparse'
   require "#{__dir__}/request_test_generator"
   require "#{__dir__}/model_test_generator"
-  # require "#{__dir__}/factory_bot_generator"
+  require "#{__dir__}/factory_bot_generator"
 
   def initialize(argv)
     @excluded_actions = []

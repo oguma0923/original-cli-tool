@@ -4,6 +4,7 @@ RSpec.describe RailsTestGenerator do
   let(:name) { 'test' }
   let(:request_test_file) { 'out/tests_spec.rb' }
   let(:model_test_file) { 'out/test.rb' }
+  let(:factory_bot_file) { 'out/tests.rb' }
 
   describe 'generate --name' do
     context '--nameが指定されない場合' do
@@ -52,8 +53,17 @@ RSpec.describe RailsTestGenerator do
     after { File.delete(model_test_file) }
 
     it 'nameに対応したモデルテストが作成されること' do
-      RailsTestGenerator.new(['--model', '--name', name])
+      RailsTestGenerator.new(['--model', '--name', name]).generate
       expect(File).to exist(model_test_file)
+    end
+  end
+
+  describe 'generate --columns' do
+    after { File.delete(factory_bot_file) }
+
+    it 'nameに対応したFactoryBotファイルが生成されること' do
+      RailsTestGenerator.new(['--columns', 'str:string,int:integer', '--name', name]).generate
+      expect(File).to exist(factory_bot_file)
     end
   end
 end
