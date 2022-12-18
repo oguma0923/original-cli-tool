@@ -9,7 +9,17 @@ RSpec.describe RailsTestGenerator do
   describe 'generate --name' do
     context '--nameが指定されない場合' do
       it 'ArgumentErrorが発生する' do
-        expect { RailsTestGenerator.new(['--request']).generate }.to raise_error(ArgumentError)
+        expect do
+          RailsTestGenerator.new(['--request']).generate
+        end.to raise_error(ArgumentError)
+      end
+    end
+
+    context '--nameの指定はあるが、--request、--model、--factory_botのいずれも指定がない場合' do
+      it 'ArgumentErrorが発生する' do
+        expect do
+          RailsTestGenerator.new(['--name', 'test']).generate
+        end.to raise_error(ArgumentError)
       end
     end
   end
