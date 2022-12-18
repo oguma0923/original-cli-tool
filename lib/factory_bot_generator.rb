@@ -11,8 +11,8 @@ class FactoryBotGenerator
   end
 
   def generate
-    path_output = "#{__dir__}/out/#{@model_name.pluralize}.rb"
-    path_template = "#{__dir__}/lib/factory_bot.rb.erb"
+    path_output = File.expand_path("../out/#{@model_name.pluralize}.rb", __dir__)
+    path_template = File.expand_path('../templates/factory_bot.rb.erb', __dir__)
 
     test_data = ''
     @columns.each { |column| test_data << test_data_text(column) }

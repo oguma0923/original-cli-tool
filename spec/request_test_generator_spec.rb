@@ -1,8 +1,8 @@
-require_relative '../request_test_generator'
+require_relative '../lib/request_test_generator'
 
 RSpec.describe RequestTestGenerator do
   let(:controller_name) { 'test' }
-  let(:generated_file) { 'out/tests_spec.rb' }
+  let(:generated_file) { File.expand_path('../out/tests_spec.rb', __dir__) }
 
   describe 'generate' do
     after { File.delete(generated_file) }

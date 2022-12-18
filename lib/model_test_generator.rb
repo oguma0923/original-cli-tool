@@ -7,8 +7,8 @@ class ModelTestGenerator
   end
 
   def generate
-    path_output = "#{__dir__}/out/#{@model_name}.rb"
-    path_template = "#{__dir__}/lib/model_spec.rb.erb"
+    path_output = File.expand_path("../out/#{@model_name}.rb", __dir__)
+    path_template = File.expand_path('../templates/model_spec.rb.erb', __dir__)
 
     model_test_erb = ERB.new(File.read(path_template), trim_mode: 2)
     File.write(path_output, model_test_erb.result(binding))
