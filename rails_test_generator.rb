@@ -5,6 +5,7 @@ class RailsTestGenerator
   require "#{__dir__}/lib/factory_bot_generator"
 
   def initialize(argv)
+    @modes = []
     @excluded_actions = []
 
     OptionParser.new do |options|
@@ -21,7 +22,7 @@ class RailsTestGenerator
         '-r',
         '--request',
         'リクエストテストを生成 例：-r'
-      ) { @request = true }
+      ) { @modes << :request }
 
       options.on(
         '-e',
@@ -36,7 +37,7 @@ class RailsTestGenerator
         '-m',
         '--model',
         'モデルテストを生成 例：-m'
-      ) { @model = true }
+      ) { @modes << :model }
 
       options.on(
         '-c',
@@ -45,6 +46,7 @@ class RailsTestGenerator
         'FactoryBotで定義するカラム名と型を指定 例：-c title:strings,birthday:date'
       ) do |columns|
         @columns = columns
+        @modes << :factory_bot
       end
 
       options.parse(argv)
@@ -54,9 +56,16 @@ class RailsTestGenerator
   def generate
     raise ArgumentError, '--nameによるモデル名（コントローラ名）の指定がありません。' if @name.nil?
 
-    RequestTestGenerator.new(@name, @excluded_actions).generate if @request
-    ModelTestGenerator.new(@name).generate if @model
-    FactoryBotGenerator.new(@name, @columns).generate if @columns
+    @modes.each do |mode|
+      case mode
+      when :request
+        RequestTestGenerator.new(@name, @excluded_actions).generate
+      when :model
+        ModelTestGenerator.new(@name).generate
+      when :factory_bot
+        FactoryBotGenerator.new(@name, @columns).generate
+      end
+    end
   end
 end
 
