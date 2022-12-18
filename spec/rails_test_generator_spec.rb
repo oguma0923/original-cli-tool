@@ -3,7 +3,7 @@ require_relative '../rails_test_generator'
 RSpec.describe RailsTestGenerator do
   let(:name) { 'test' }
   let(:request_test_file) { 'out/tests_spec.rb' }
-  let(:model_test_file) { 'out/test.rb' }
+  let(:model_test_file) { 'out/test_spec.rb' }
   let(:factory_bot_file) { 'out/tests.rb' }
 
   describe 'generate --name' do
