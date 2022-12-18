@@ -55,6 +55,7 @@ class RailsTestGenerator
 
   def generate
     raise ArgumentError, '--nameによるモデル名（コントローラ名）の指定がありません。' if @name.nil?
+    raise ArgumentError, '--request, --model, --columnsのうち1つ以上の指定が必須です。' if @modes.empty?
 
     @modes.each do |mode|
       case mode
