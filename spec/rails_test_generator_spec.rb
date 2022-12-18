@@ -58,11 +58,11 @@ RSpec.describe RailsTestGenerator do
     end
   end
 
-  describe 'generate --columns' do
+  describe 'generate --factory_bot' do
     after { File.delete(factory_bot_file) }
 
     it 'nameに対応したFactoryBotファイルが生成されること' do
-      RailsTestGenerator.new(['--columns', 'str:string,int:integer', '--name', name]).generate
+      RailsTestGenerator.new(['--factory_bot', 'str:string,int:integer', '--name', name]).generate
       expect(File).to exist(factory_bot_file)
     end
   end

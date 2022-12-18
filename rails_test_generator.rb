@@ -40,10 +40,10 @@ class RailsTestGenerator
       ) { @modes << :model }
 
       options.on(
-        '-c',
-        '--columns column_name:type',
+        '-f',
+        '--factory_bot column_name:data_type',
         Array,
-        'FactoryBotで定義するカラム名と型を指定 例：-c title:strings,birthday:date'
+        'FactoryBotで定義するカラム名と型を指定 例：-f title:strings,birthday:date'
       ) do |columns|
         @columns = columns
         @modes << :factory_bot
