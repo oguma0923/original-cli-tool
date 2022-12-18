@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe <%= @model_name.camelize.pluralize %>, type: :model do
+RSpec.describe <%= @model_name.camelize %>, type: :model do
   let(:<%= @model_name %>) { FactoryBot.create(:<%= @model_name %>) }
 
   describe 'バリデーション' do
