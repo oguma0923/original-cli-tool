@@ -1,0 +1,11 @@
+require 'rails_helper'
+
+RSpec.describe <%= @model_name.camelize %>, type: :model do
+  let(:<%= @model_name %>) { FactoryBot.create(:<%= @model_name %>) }
+
+  describe 'バリデーション' do
+    it 'すべてのカラムに値が存在すれば登録できる' do
+      expect(<%= @model_name %>).to be_valid
+    end
+  end
+end

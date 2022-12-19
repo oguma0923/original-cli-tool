@@ -1,0 +1,96 @@
+require 'rails_helper'
+
+RSpec.describe '<%= @controller_name.camelize.pluralize %>', type: :request do
+  let(:<%= @controller_name %>) { FactoryBot.create(:<%= @controller_name %>) }
+  let(:new_<%= @controller_name %>) { FactoryBot.attributes_for(:<%= @controller_name %>) }
+  let(:edited_<%= @controller_name %>) { FactoryBot.attributes_for(:<%= @controller_name %>, :edit) }
+  let(:invalid_<%= @controller_name %>) { FactoryBot.attributes_for(:<%= @controller_name %>, :invalid) }
+
+<% if @actions.include?('index') %>
+  describe 'GET /<%= @controller_name.pluralize %>' do
+    it 'レスポンスが正常であること' do
+      get <%= @controller_name.pluralize %>_path
+      expect(response).to have_http_status :ok
+    end
+  end
+
+<% end %>
+<% if @actions.include?('show') %>
+  describe 'GET /<%= @controller_name.pluralize %>/:id' do
+    it 'レスポンスが正常であること' do
+      get <%= @controller_name.pluralize %>_path(<%= @controller_name %>)
+      expect(response).to have_http_status :ok
+    end
+  end
+
+<% end %>
+<% if @actions.include?('new') %>
+  describe 'GET /<%= @controller_name.pluralize %>/new' do
+    it 'レスポンスが正常であること' do
+      get new_<%= @controller_name %>_path
+      expect(response).to have_http_status :ok
+    end
+  end
+
+<% end %>
+<% if @actions.include?('edit') %>
+  describe 'GET /<%= @controller_name.pluralize %>/:id/edit' do
+    it 'レスポンスが正常であること' do
+      get edit_<%= @controller_name %>_path(<%= @controller_name %>)
+      expect(response).to have_http_status :ok
+    end
+  end
+
+<% end %>
+<% if @actions.include?('create') %>
+  describe 'POST /<%= @controller_name.pluralize %>' do
+    context 'パラメータが有効なとき' do
+      it 'レコードのページにリダイレクトされること' do
+        post <%= @controller_name.pluralize %>_path, params: { <%= @controller_name %>: new_<%= @controller_name %> }
+        expect(response).to redirect_to <%= @controller_name %>_path(<%= @controller_name %>.last)
+      end
+    end
+
+    context 'パラメータが無効なとき' do
+      it 'render :new が行われること' do
+        expect do
+          post <%= @controller_name.pluralize %>_path, params: { <%= @controller_name %>: invalid_<%= @controller_name %> }
+        end.to render_template(:new)
+      end
+    end
+  end
+
+<% end %>
+<% if @actions.include?('update') %>
+  describe 'PATCH/PUT /<%= @controller_name.pluralize %>/:id' do
+    context 'パラメータが有効なとき' do
+      it 'レコードの更新ができること' do
+        patch <%= @controller_name %>_path(<%= @controller_name %>), params: { <%= @controller_name %>: edited_<%= @controller_name %> }
+        expect(<%= @controller_name %>.reload.name).to eq edited_<%= @controller_name %>[:name] # パラメータに合わせて編集
+      end
+
+      it 'レコードのページにリダイレクトされること' do
+        patch <%= @controller_name %>_path(<%= @controller_name %>), params: { <%= @controller_name %>: edited_<%= @controller_name %> }
+        expect(response).to redirect_to <%= @controller_name %>_path(<%= @controller_name %>)
+      end
+    end
+
+    context 'パラメータが無効なとき' do
+      it 'render :edit が行われること' do
+        expect do
+        patch <%= @controller_name %>_path(<%= @controller_name %>), params: { <%= @controller_name %>: invalid_<%= @controller_name %> }
+        end.to render_template(:edit)
+      end
+    end
+  end
+
+<% end %>
+<% if @actions.include?('destroy') %>
+  describe 'DELETE /<%= @controller_name.pluralize %>/:id' do
+    it 'indexページにリダイレクトされること' do
+      delete <%= @controller_name %>_path(<%= @controller_name %>)
+      expect(subject).to redirect_to <%= @controller_name.pluralize %>_path
+    end
+  end
+<% end %>
+end
